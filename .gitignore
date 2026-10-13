@@ -1,0 +1,9 @@
+.venv/
+.jupyter/
+.mplconfig/
+__pycache__/
+.ipynb_checkpoints/
+.DS_Store
+database/
+data/raw/*.xlsx
+data/raw/*.zip

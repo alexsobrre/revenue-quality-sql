@@ -1,0 +1,5 @@
+line_class,line_count,recorded_signed_value,unidentified_lines,exact_repeat_lines,non_product_code_lines
+zero_value,2515,0.0,2475,5,32
+cancellation_adjustment,9288,-896812.49,383,37,589
+negative_price,2,-22124.12,2,0,2
+positive_sale,530104,10666684.544,132220,5226,2762

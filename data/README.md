@@ -1,0 +1,1 @@
+Source: Chen, D. (2015), Online Retail, UCI Machine Learning Repository, https://doi.org/10.24432/C5BW33. CC BY 4.0. Original workbook under raw/ is preserved; the manifest records its hash and coverage. The loader can download it from UCI. All transformations and policy flags are implemented in SQL.

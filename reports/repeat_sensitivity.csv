@@ -1,0 +1,3 @@
+treatment,eligible_lines,net_recorded_sales
+Preserve all recorded lines (primary),539392,9769872.054
+Keep first exact repeat only (sensitivity),534129,9748131.074

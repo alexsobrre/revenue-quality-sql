@@ -1,0 +1,19 @@
+{
+  "gross_positive_sales": 10666684.544,
+  "adjustments": 896812.49,
+  "net_recorded_sales": 9769872.054,
+  "adjustment_ratio": 0.08407603002607368,
+  "unidentified_gross_share": 0.16455690920262017,
+  "top2_adjustment_share": 0.27391812975307694,
+  "top10_identified_gross_share": 0.17261881248972172,
+  "top1pct_identified_gross_share": 0.31998855856660385,
+  "month1_repeat_rate": 0.2365374937091092,
+  "month1_eligible_customers": 3974,
+  "whole_window_repeat_share": 0.6558321807284463,
+  "latest_complete_month": "2011-11-01 00:00:00",
+  "latest_net_growth": 0.3652282379603332,
+  "volume_effect": 412735.2498529412,
+  "invoice_value_effect": -58218.21985294109,
+  "watchlist_product": "23166",
+  "watchlist_ratio": 0.9483325279568455
+}

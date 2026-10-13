@@ -1,0 +1,138 @@
+┌─────────────────────────────────────┐
+│┌───────────────────────────────────┐│
+││    Query Profiling Information    ││
+│└───────────────────────────────────┘│
+└─────────────────────────────────────┘
+-- Run after 01–08; inspect actual timings, scans, filters, join, and aggregate. -- Do not claim a speedup without a controlled before/after comparison. EXPLAIN ANALYZE SELECT p.latest_description,sum(e.signed_value) AS net_value FROM eligible_lines e JOIN dim_products p USING(stock_code) WHERE e.invoice_date>=TIMESTAMP '2011-01-01'   AND e.invoice_date<TIMESTAMP '2011-12-01' GROUP BY p.latest_description ORDER BY net_value DESC LIMIT 10; 
+┌────────────────────────────────────────────────┐
+│┌──────────────────────────────────────────────┐│
+││              Total Time: 0.0331s             ││
+│└──────────────────────────────────────────────┘│
+└────────────────────────────────────────────────┘
+┌───────────────────────────┐
+│           QUERY           │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│      EXPLAIN_ANALYZE      │
+│    ────────────────────   │
+│                           │
+│           0 rows          │
+│           0.00s           │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│           TOP_N           │
+│    ────────────────────   │
+│          Top: 10          │
+│                           │
+│         Order By:         │
+│  sum(e.signed_value) DESC │
+│                           │
+│                           │
+│                           │
+│          10 rows          │
+│           0.00s           │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│       HASH_GROUP_BY       │
+│    ────────────────────   │
+│         Groups: #0        │
+│    Aggregates: sum(#1)    │
+│                           │
+│                           │
+│                           │
+│         3,646 rows        │
+│           0.05s           │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│         PROJECTION        │
+│    ────────────────────   │
+│     latest_description    │
+│        signed_value       │
+│                           │
+│                           │
+│                           │
+│        471,713 rows       │
+│           0.00s           │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│         HASH_JOIN         │
+│    ────────────────────   │
+│      Join Type: INNER     │
+│                           │
+│        Conditions:        │
+│  stock_code = stock_code  ├──────────────┐
+│                           │              │
+│                           │              │
+│                           │              │
+│        471,713 rows       │              │
+│           0.02s           │              │
+└─────────────┬─────────────┘              │
+┌─────────────┴─────────────┐┌─────────────┴─────────────┐
+│         PROJECTION        ││         TABLE_SCAN        │
+│    ────────────────────   ││    ────────────────────   │
+│             #1            ││           Table:          │
+│             #2            ││    revenue_quality.main   │
+│                           ││       .dim_products       │
+│                           ││                           │
+│                           ││   Type: Sequential Scan   │
+│                           ││                           │
+│           0.00s           ││        Projections:       │
+│                           ││         stock_code        │
+│                           ││     latest_description    │
+│                           ││                           │
+│                           ││                           │
+│                           ││                           │
+│        471,713 rows       ││         4,070 rows        │
+│          (0.00s)          ││           0.00s           │
+└─────────────┬─────────────┘└───────────────────────────┘
+┌─────────────┴─────────────┐
+│           FILTER          │
+│    ────────────────────   │
+│      ((line_class =       │
+│    'positive_sale') OR    │
+│       (line_class =       │
+│ 'cancellation_adjustment')│
+│      OR (line_class =     │
+│ 'other_negative_adjustment│
+│            '))            │
+│                           │
+│                           │
+│                           │
+│        471,713 rows       │
+│           0.01s           │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│         TABLE_SCAN        │
+│    ────────────────────   │
+│           Table:          │
+│    revenue_quality.main   │
+│        .fact_lines        │
+│                           │
+│   Type: Sequential Scan   │
+│                           │
+│        Projections:       │
+│         line_class        │
+│         stock_code        │
+│        signed_value       │
+│                           │
+│          Filters:         │
+│ optional: line_class IN ( │
+│     'positive_sale',      │
+│ 'cancellation_adjustment',│
+│ 'other_negative_adjustment│
+│             ')            │
+│ invoice_date>='2011-01-01 │
+│  00:00:00'::TIMESTAMP AND │
+│  invoice_date<'2011-12-01 │
+│    00:00:00'::TIMESTAMP   │
+│                           │
+│      Dynamic Filters:     │
+│   optional: stock_code>=  │
+│   '10002' AND optional:   │
+│       stock_code<='m'     │
+│                           │
+│                           │
+│                           │
+│        473,903 rows       │
+│           0.03s           │
+└───────────────────────────┘

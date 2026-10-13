@@ -1,0 +1,10 @@
+check_name,failures
+Gross minus adjustments equals net,0
+Typed source bridge balances,0
+Monthly net equals eligible ledger,0
+Growth decomposition balances,0
+Cohort rate is between zero and one,0
+Invoice dimension is unique,0
+Product dimension is unique,0
+Line ID is unique,0
+Product join preserves eligible row count,0
