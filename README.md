@@ -1,5 +1,9 @@
 # Revenue Quality & Customer Concentration — SQL Business Analysis
 
+## Abstract
+
+This project examines whether a retailer’s sales growth reflects lasting customer value by reconciling sales, cancellations, and purchasing patterns. The analysis found £9.77 million in net recorded sales, volume-led November growth, and two customers among the gross-sales top ten whose purchases were almost entirely cancelled. The recommendation is to verify exceptional adjustments and assess customers using both gross and net contributions before making account-management decisions.
+
 **Is recorded sales growth supported by repeat purchasing and a broad customer base—or weakened by cancellations and dependence on a few large customers?**
 
 This project turns 541,909 invoice lines into a reconciled management analysis. DuckDB SQL owns the definitions, transformations, joins, aggregations, window calculations, and reporting views. Python handles file loading and presentation. The executed notebook shows the SQL and interprets each step rather than only displaying a final dashboard.
